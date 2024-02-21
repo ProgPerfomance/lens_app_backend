@@ -1,13 +1,13 @@
 import 'package:mysql_client/mysql_client.dart';
 
-Future<void> createReponseFromSQL({
-  var email,
-  var name,
-  var password,
-  var description,
-  var freelancer,
-  var experience,
-  var balance,
+Future<void> createUser({
+  required var email,
+  required var name,
+  required var password,
+  required var description,
+  required var freelancer,
+  required var experience,
+  required var balance,
 }) async {
   var sql = await MySQLConnection.createConnection(
       host: 'localhost',
@@ -25,6 +25,6 @@ Future<void> createReponseFromSQL({
   int id_int = int.parse(id);
   print(id_int);
   var result = sql.execute(
-      "insert into users (id,name,email,description,freelancer,experience,balance) values (${id_int + 1}, '$name', '$email', '$description', $freelancer, $experience, $balance)");
+      "insert into users (id,name,email,description,freelancer,experience,balance,password_hast) values (${id_int + 1}, '$name', '$email', '$description', $freelancer, $experience, $balance, '$password')");
   await sql.close();
 }
