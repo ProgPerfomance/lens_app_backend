@@ -1,17 +1,32 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:lens_app_backend/functions/auth/login.dart';
 import 'package:lens_app_backend/functions/auth/registration.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 
 void startServer()async {
+  var sql = await MySQLConnection.createConnection(
+      host: 'localhost',
+      port: 3306,
+      userName: 'root',
+      password: '1234567890',
+      databaseName: 'lensapp');
+  await sql.connect();
   Router router = Router();
   router.post('/registration', (Request request) async {
     var json = await request.readAsString();
     var data = await jsonDecode(json);
-    await createUser(email: data['email'], name: data['name'], password: data['password'], description: data['description'], freelancer: data['freelancer'], experience: data['experience'], balance: data['balance']);
-    return Response.ok('');
+    int response = await createUser(email: data['email'], name: data['name'], password: data['password'], description: data['description'], freelancer: data['freelancer'], experience: data['experience'], balance: data['balance'], sql: sql);
+    return Response.ok(jsonEncode(response));
+  });
+  router.post('/login', (Request request) async {
+    var json = await request.readAsString();
+    var data = await jsonDecode(json);
+    Map response = await authUser(data['email'], data['password'], sql);
+    return Response.ok(jsonEncode(request));
   });
   router.post('/locations', (Request request) async {
     return Response.ok('');
@@ -21,6 +36,6 @@ void startServer()async {
     print(city);
    return Response.ok('город $city');
   });
-    HttpServer server = await serve(router, 'localhost', 2314);
+    HttpServer server = await serve(router, '63.251.122.116', 2308);
   print('server started');
 }
