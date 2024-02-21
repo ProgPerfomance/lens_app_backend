@@ -25,6 +25,6 @@ Future<void> createReponseFromSQL({
   int id_int = int.parse(id);
   print(id_int);
   var result = sql.execute(
-      "insert into users (uid,name,email,description,freelancer,experience,balance) values (${id_int + 1},)");
+      "insert into users (id,name,email,description,freelancer,experience,balance) values (${id_int + 1}, '$name', '$email', '$description', $freelancer, $experience, $balance)");
   await sql.close();
 }
