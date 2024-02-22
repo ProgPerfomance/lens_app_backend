@@ -26,7 +26,7 @@ void startServer()async {
     var json = await request.readAsString();
     var data = await jsonDecode(json);
     Map response = await authUser(data['email'], data['password'], sql);
-    return Response.ok(jsonEncode(request));
+    return Response.ok(jsonEncode(response));
   });
   router.post('/locations', (Request request) async {
     return Response.ok('');
