@@ -17,7 +17,7 @@ Future<int> createUser({
   String id = resul.rows.last.assoc()['id']!;
   int id_int = int.parse(id);
   print(id_int);
-  var result = sql.execute(
+  sql.execute(
       "insert into users (id,name,email,description,freelancer,experience,balance,password_hast) values (${id_int + 1}, '$name', '$email', '$description', $freelancer, $experience, $balance, '$password')");
   return (id_int+1);
 }

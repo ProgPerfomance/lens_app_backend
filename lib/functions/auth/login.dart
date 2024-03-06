@@ -4,9 +4,10 @@ Future<Map<String, dynamic>> authUser(
     String email, String password, MySQLConnection sql) async {
 
   try {
-    final user = await sql.execute("SELECT * FROM users where email = '$email' and password_hast = '$password'", {}, );
-  var  data = (user.rows.first.assoc());
-    return {'success': true, 'uid': data['id']};
+    final user = await sql.execute("SELECT * FROM users where email = '$email' and password_hast = '$password", {}, );
+    print(user.rows.first.assoc()['name']);
+    var  data = (user.rows.first.assoc());
+    return {'success': true, 'uid': data['id'], 'name': data['name'], 'email': data['email'], 'freelancer': data['freelancer']};
   } catch (e) {}
   return {'success': false};
 }

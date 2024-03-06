@@ -7,6 +7,8 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart';
 import 'package:shelf_router/shelf_router.dart';
 
+import 'functions/user/user.dart';
+
 void startServer()async {
   var sql = await MySQLConnection.createConnection(
       host: 'localhost',
@@ -26,7 +28,7 @@ void startServer()async {
     var json = await request.readAsString();
     var data = await jsonDecode(json);
     Map response = await authUser(data['email'], data['password'], sql);
-    return Response.ok(jsonEncode(response));
+    return Response.ok(jsonEncode(request));
   });
   router.post('/locations', (Request request) async {
     return Response.ok('');
@@ -36,6 +38,13 @@ void startServer()async {
     print(city);
    return Response.ok('город $city');
   });
+  router.put('/updateBalance', (Request request) async {
+    var json = await request.readAsString();
+    var data = await jsonDecode(json);
+    User.updateUserBalance(sql, balance: data['balance'], id: data['uid']);
+    return Response.ok('');
+  });
     HttpServer server = await serve(router, '63.251.122.116', 2308);
   print('server started');
+
 }
