@@ -50,7 +50,6 @@ Future<List> getUserLocations(MySQLConnection sql, uid) async {
   final response = await sql.execute('select * from services where uid=$uid');
   for(var item in response.rows) {
     var data = item.assoc();
-    final user = await sql.execute('select * from users where ${data['uid']}');
     locations.add({
       'id': data['id'],
       'uid': data['uid'],
@@ -58,8 +57,6 @@ Future<List> getUserLocations(MySQLConnection sql, uid) async {
       'geo_y': data['geo_y'],
       'price': data['price'],
       'title': data['title'],
-      'user_name': user.rows.first.assoc()['name'],
-      'user_experience': user.rows.first.assoc()['experience'],
     });
   }
   return List.from(locations.reversed);
