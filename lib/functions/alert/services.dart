@@ -24,3 +24,23 @@ Future<List> getPhotographs({
   }
   return users;
 }
+
+Future<List> getLocations(MySQLConnection sql) async {
+  List locations = [];
+  final response = await sql.execute('select * from services');
+  for(var item in response.rows) {
+    final user = await sql.execute('select * from services');
+    var data = item.assoc();
+    locations.add({
+      'id': data['id'],
+      'uid': data['uid'],
+      'geo_x': data['geo_x'],
+      'geo_y': data['geo_y'],
+      'price': data['price'],
+      'title': data['title'],
+      'user_name': user.rows.first.assoc()['name'],
+      'user_experience': user.rows.first.assoc()['experience'],
+    });
+  }
+  return List.from(locations.reversed);
+}

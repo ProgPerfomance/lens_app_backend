@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:lens_app_backend/functions/alert/services.dart';
 import 'package:lens_app_backend/functions/auth/login.dart';
 import 'package:lens_app_backend/functions/auth/registration.dart';
 import 'package:mysql_client/mysql_client.dart';
@@ -35,9 +36,10 @@ void startServer()async {
     return Response.ok('');
   });
   router.get('/locations', (Request request) async {
-    String? city = request.url.queryParameters['city'];
-    print(city);
-   return Response.ok('город $city');
+    // String? city = request.url.queryParameters['city'];
+    // print(city);
+    List response = await getLocations(sql);
+   return Response.ok(jsonEncode(response));
   });
   router.put('/updateBalance', (Request request) async {
     var json = await request.readAsString();
