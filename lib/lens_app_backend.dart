@@ -36,7 +36,7 @@ void startServer()async {
     return Response.ok('');
   });
   router.get('/locations', (Request request) async {
-    String? uid = request.url.queryParameters['city'];
+    String? uid = request.url.queryParameters['uid'];
     print(uid);
     if(uid == null) {
       List response = await getLocations(sql);
