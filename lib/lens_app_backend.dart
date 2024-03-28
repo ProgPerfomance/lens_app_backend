@@ -36,10 +36,16 @@ void startServer()async {
     return Response.ok('');
   });
   router.get('/locations', (Request request) async {
-    // String? city = request.url.queryParameters['city'];
-    // print(city);
-    List response = await getLocations(sql);
-   return Response.ok(jsonEncode(response));
+    String? uid = request.url.queryParameters['city'];
+    print(uid);
+    if(uid == null) {
+      List response = await getLocations(sql);
+      return Response.ok(jsonEncode(response));
+    }
+    else {
+      List response = await getUserLocations(sql, uid);
+      return Response.ok(jsonEncode(response));
+    }
   });
   router.put('/updateBalance', (Request request) async {
     var json = await request.readAsString();
