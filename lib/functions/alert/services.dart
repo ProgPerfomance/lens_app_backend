@@ -29,8 +29,8 @@ Future<List> getLocations(MySQLConnection sql) async {
   List locations = [];
   final response = await sql.execute('select * from services');
   for(var item in response.rows) {
-    final user = await sql.execute('select * from services');
     var data = item.assoc();
+    final user = await sql.execute('select * from users where ${data['uid']}');
     locations.add({
       'id': data['id'],
       'uid': data['uid'],
