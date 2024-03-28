@@ -61,3 +61,18 @@ Future<List> getUserLocations(MySQLConnection sql, uid) async {
   }
   return List.from(locations.reversed);
 }
+
+Future<void> createService(MySQLConnection sql, {
+  required uid,
+  required geo_x,
+  required geo_y,
+  required price,
+  required title,
+}) async {
+  var resul = await sql.execute(
+    "SELECT * FROM services",
+  );
+  String id = resul.rows.last.assoc()['id'] as String;
+  int idInt = int.parse(id);
+  sql.execute("insert into services (id, uid, geo_x, geo_y, price, title) values (${idInt+1}, $uid, $geo_x, $geo_y, $price, '$title')");
+}

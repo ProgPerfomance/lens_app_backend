@@ -33,7 +33,10 @@ void startServer()async {
     return Response.ok(jsonEncode(response));
   });
   router.post('/locations', (Request request) async {
-    return Response.ok('');
+    var json = await request.readAsString();
+    var data = await jsonDecode(json);
+   await createService(sql, uid: data['uid'], geo_x: data['geo_x'], geo_y: data['geo_y'], price: data['price'], title: data['title']);
+    return Response.ok('created');
   });
   router.get('/myLocations', (Request request) async {
     String? uid = request.url.queryParameters['uid'];
