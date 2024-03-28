@@ -8,6 +8,8 @@ Future<Map<String, dynamic>> authUser(
     print(user.rows.first.assoc()['name']);
     var  data = (user.rows.first.assoc());
     return {'success': true, 'uid': data['id'], 'name': data['name'], 'email': data['email'], 'freelancer': data['freelancer'], 'balance': data['balance']};
-  } catch (e) {}
+  } catch (e) {
+    print(e);
+  }
   return {'success': false};
 }
