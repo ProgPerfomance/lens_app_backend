@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:lens_app_backend/functions/alert/request.dart';
 import 'package:lens_app_backend/functions/alert/services.dart';
 import 'package:lens_app_backend/functions/auth/login.dart';
 import 'package:lens_app_backend/functions/auth/registration.dart';
@@ -73,6 +74,12 @@ void startServer() async {
     print(uid);
     Map response = await getProfile(sql, uid);
     return Response.ok(jsonEncode(response));
+  });
+  router.get('/requests', (Request request) async {
+    String? uid = request.url.queryParameters['uid'];
+    String? freelancer = request.url.queryParameters['freelancer'];
+    List requests = await Requests().getCustomerRequests(sql, uid: uid);
+    return Response.ok(requests);
   });
   HttpServer server = await serve(router, '63.251.122.116', 2314);
   print('server started');
