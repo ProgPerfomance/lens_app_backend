@@ -3,7 +3,7 @@ import 'package:mysql_client/mysql_client.dart';
 class Requests {
   Future<List> getCustomerRequests(MySQLConnection sql, {required uid}) async {
     List requestList = [];
-    final requests = await sql.execute("select from requests where uid=$uid");
+    final requests = await sql.execute("select* from requests where uid=$uid");
     for(var item in requests.rows) {
       var data = item.assoc();
       requestList.add({
