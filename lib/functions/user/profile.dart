@@ -25,6 +25,7 @@ Future<Map> getProfile(MySQLConnection sql, uid) async {
       'title': item.assoc()['title'],
       'price': item.assoc()['fast_work'],
       'uid': item.assoc()['uid'],
+      'name': item.assoc()['name'],
     });
   }
   return {
