@@ -17,7 +17,7 @@ Future<Map> getProfile(MySQLConnection sql, uid) async {
       'active_participation': item.assoc()['active_participation'],
     });
   }
-  for(var item in reviews.rows) {
+  for(var item in offers.rows) {
     offersList.add({
       'geo_x': item.assoc()['geo_x'],
       'geo_y': item.assoc()['geo_y'],
