@@ -77,7 +77,6 @@ void startServer() async {
   });
   router.get('/requests', (Request request) async {
     String? uid = request.url.queryParameters['uid'];
-    String? freelancer = request.url.queryParameters['freelancer'];
     List requests = await Requests().getCustomerRequests(sql, uid: uid);
     return Response.ok(requests);
   });
