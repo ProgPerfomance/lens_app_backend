@@ -20,4 +20,5 @@ class Requests {
     }
    return requestList;
   }
+  Future<void> sendRequest () async{}
 }

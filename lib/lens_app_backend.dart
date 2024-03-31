@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:lens_app_backend/functions/alert/photographs.dart';
 import 'package:lens_app_backend/functions/alert/request.dart';
 import 'package:lens_app_backend/functions/alert/services.dart';
 import 'package:lens_app_backend/functions/auth/login.dart';
@@ -79,6 +80,11 @@ void startServer() async {
     String? uid = request.url.queryParameters['uid'];
     List requests = await Requests().getCustomerRequests(sql, uid: uid);
     return Response.ok(requests);
+  });
+  router.get('/photographs', (Request request) async {
+    String? uid = request.url.queryParameters['uid'];
+    List requests = await getPhotographsList(sql);
+    return Response.ok(jsonEncode(requests));
   });
   HttpServer server = await serve(router, '63.251.122.116', 2314);
   print('server started');
